@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15
+    container_name: awispalace_db
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - awispalace_data:/var/lib/postgresql/data
+    networks:
+      - awispalace_network
+
+  backend:
+    build: ./backend
+    container_name: awispalace_be
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+    depends_on:
+      - db
+    ports:
+      - "${APP_PORT}:8080"
+    networks:
+      - awispalace_network
+
+volumes:
+  awispalace_data:
+
+networks:
+  awispalace_network:
