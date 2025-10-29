@@ -16,7 +16,9 @@ services:
       - awispalace_network
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: awispalace_be
     env_file: .env
     environment:
