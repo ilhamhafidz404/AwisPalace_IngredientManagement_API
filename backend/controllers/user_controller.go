@@ -9,6 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetUsers godoc
+// @Summary Get Users
+// @Description Get Users
+// @Tags Users
+// @Success 200 {object} map[string]string
+// @Router /users [get]
 func GetUsers(c *gin.Context) {
 	var users []models.User
 

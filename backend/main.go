@@ -6,21 +6,34 @@ import (
 	"AwisPalace_IngredientManagement/routes"
 
 	"github.com/gin-gonic/gin"
+
+	_ "AwisPalace_IngredientManagement/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title Awis Palace Ingredient Management API
+// @version 1.0
+// @description API documentation for Awis Palace Ingredient Management built with Gin and GORM.
+// @host localhost:8080
+// @BasePath /
 func main() {
-  // Load file .env
-  // if err := godotenv.Load(); err != nil {
-  //   log.Fatal("❌ Error loading .env file")
-  // }
+	// Load .env file
+	// if err := godotenv.Load(); err != nil {
+	// 	log.Fatal("❌ Error loading .env file")
+	// }
 
-	// Connect DB
+	// Connect to DB
 	config.ConnectDB()
-  migrations.Migrate()
+	migrations.Migrate()
 
-	// Router init
+	// init routes
 	r := gin.Default()
 	routes.SetupRoutes(r)
+
+	// Swagger 
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// 
 	r.Run(":8080")
