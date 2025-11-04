@@ -8,9 +8,10 @@ import (
 func DatabaseSeeder(db *gorm.DB) {
 	fmt.Println("🚀 Menjalankan Database Seeder...")
 
-	// Daftar seeder yang ingin dijalankan
+	// Seeder List
 	seeders := []func(*gorm.DB) error{
 		SeedUnits,
+		IngredientSeeder,
 	}
 
 	for _, seed := range seeders {

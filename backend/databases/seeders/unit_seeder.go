@@ -19,10 +19,9 @@ func SeedUnits(db *gorm.DB) error {
 
 	for _, unit := range units {
 		var existing models.Unit
-		// Cek apakah data sudah ada berdasarkan nama (agar tidak duplicate)
 		if err := db.Where("name = ?", unit.Name).First(&existing).Error; err == gorm.ErrRecordNotFound {
 			if err := db.Create(&unit).Error; err != nil {
-				return fmt.Errorf("gagal menambahkan unit %s: %v", unit.Name, err)
+				return fmt.Errorf("❌ gagal menambahkan unit %s: %v", unit.Name, err)
 			}
 			fmt.Printf("✅ Unit %s berhasil ditambahkan\n", unit.Name)
 		} else {
