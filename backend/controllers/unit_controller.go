@@ -15,7 +15,6 @@ import (
 // @Summary Get Units
 // @Description Get Units
 // @Tags Units
-// @Success 200 {object} map[string]string
 // @Router /units [get]
 func GetUnits(c *gin.Context) {
 	var units []models.Unit

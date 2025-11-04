@@ -15,6 +15,16 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/ingredients": {
+            "get": {
+                "description": "Get Ingredients",
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Get Ingredients",
+                "responses": {}
+            }
+        },
         "/units": {
             "get": {
                 "description": "Get Units",
@@ -22,17 +32,7 @@ const docTemplate = `{
                     "Units"
                 ],
                 "summary": "Get Units",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
+                "responses": {}
             }
         },
         "/users": {

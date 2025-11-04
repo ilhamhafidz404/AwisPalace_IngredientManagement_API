@@ -7,16 +7,17 @@ info:
   title: Awis Palace Ingredient Management API
   version: "1.0"
 paths:
+  /ingredients:
+    get:
+      description: Get Ingredients
+      responses: {}
+      summary: Get Ingredients
+      tags:
+      - Ingredients
   /units:
     get:
       description: Get Units
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties:
-              type: string
-            type: object
+      responses: {}
       summary: Get Units
       tags:
       - Units

@@ -24,4 +24,10 @@ func SetupRoutes(router *gin.Engine) {
 	{
 		unitRoutes.GET("/", controllers.GetUnits)
 	}
+
+	// route ingredients
+	ingredientRoutes := router.Group("/ingredients")
+	{
+		ingredientRoutes.GET("/", controllers.GetIngredients)
+	}
 }
