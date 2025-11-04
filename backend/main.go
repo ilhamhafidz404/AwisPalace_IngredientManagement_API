@@ -3,9 +3,12 @@ package main
 import (
 	"AwisPalace_IngredientManagement/config"
 	"AwisPalace_IngredientManagement/databases/migrations"
+	"AwisPalace_IngredientManagement/databases/seeders"
 	"AwisPalace_IngredientManagement/routes"
+	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 
 	_ "AwisPalace_IngredientManagement/docs"
 
@@ -20,13 +23,14 @@ import (
 // @BasePath /
 func main() {
 	// Load .env file
-	// if err := godotenv.Load(); err != nil {
-	// 	log.Fatal("❌ Error loading .env file")
-	// }
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("❌ Error loading .env file")
+	}
 
 	// Connect to DB
 	config.ConnectDB()
 	migrations.Migrate()
+	seeders.DatabaseSeeder(config.DB)
 
 	// init routes
 	r := gin.Default()

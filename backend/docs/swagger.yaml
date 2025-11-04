@@ -7,6 +7,19 @@ info:
   title: Awis Palace Ingredient Management API
   version: "1.0"
 paths:
+  /units:
+    get:
+      description: Get Units
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Units
+      tags:
+      - Units
   /users:
     get:
       description: Get Users

@@ -18,4 +18,10 @@ func SetupRoutes(router *gin.Engine) {
 	{
 		userRoutes.GET("/", controllers.GetUsers)
 	}
+
+	// route units
+	unitRoutes := router.Group("/units")
+	{
+		unitRoutes.GET("/", controllers.GetUnits)
+	}
 }
