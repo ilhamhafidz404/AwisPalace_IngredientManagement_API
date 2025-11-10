@@ -70,6 +70,23 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "delete": {
+                "description": "Delete a ingredient by ID",
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Delete Ingredient",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Ingredient ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
             }
         },
         "/units": {

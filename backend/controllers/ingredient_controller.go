@@ -135,3 +135,40 @@ func UpdateIngredients(c *gin.Context) {
 		"data":    result,
 	})
 }
+
+// DeleteIngredient godoc
+// @Summary Delete Ingredient
+// @Description Delete a ingredient by ID
+// @Tags Ingredients
+// @Param id path string true "Ingredient ID"
+// @Router /ingredients/{id} [delete]
+func DeleteIngredients(c *gin.Context) {
+	id := c.Param("id")
+
+	var ingredient models.Ingredient
+
+	// Cek apakah ingredient dengan ID tersebut ada
+	if err := config.DB.First(&ingredient, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "Ingredient not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	// Hapus data ingredient
+	if err := config.DB.Delete(&ingredient).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "Failed to delete ingredient",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "success",
+		"message": "ingredient deleted successfully",
+	})
+}

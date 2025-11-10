@@ -45,6 +45,18 @@ paths:
       tags:
       - Ingredients
   /ingredients/{id}:
+    delete:
+      description: Delete a ingredient by ID
+      parameters:
+      - description: Ingredient ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses: {}
+      summary: Delete Ingredient
+      tags:
+      - Ingredients
     put:
       description: Update an existing ingredient by ID
       parameters:
