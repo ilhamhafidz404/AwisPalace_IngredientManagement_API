@@ -47,7 +47,35 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.UnitCreateRequest"
+                            "$ref": "#/definitions/dto.UnitParamRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/units/{id}": {
+            "put": {
+                "description": "Update an existing unit by ID",
+                "tags": [
+                    "Units"
+                ],
+                "summary": "Update Unit",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Unit ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated unit data",
+                        "name": "unit",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UnitParamRequest"
                         }
                     }
                 ],
@@ -76,7 +104,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.UnitCreateRequest": {
+        "dto.UnitParamRequest": {
             "type": "object",
             "properties": {
                 "name": {

@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  dto.UnitCreateRequest:
+  dto.UnitParamRequest:
     properties:
       name:
         type: string
@@ -37,9 +37,28 @@ paths:
         name: unit
         required: true
         schema:
-          $ref: '#/definitions/dto.UnitCreateRequest'
+          $ref: '#/definitions/dto.UnitParamRequest'
       responses: {}
       summary: Post Units
+      tags:
+      - Units
+  /units/{id}:
+    put:
+      description: Update an existing unit by ID
+      parameters:
+      - description: Unit ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated unit data
+        in: body
+        name: unit
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UnitParamRequest'
+      responses: {}
+      summary: Update Unit
       tags:
       - Units
   /users:

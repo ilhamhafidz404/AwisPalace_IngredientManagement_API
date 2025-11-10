@@ -12,7 +12,7 @@ type Unit struct {
 }
 
 
-type UnitCreateRequest struct {
+type UnitParamRequest struct {
 	Name      string `json:"name"`
 	Symbol    string `json:"symbol"`
 }
