@@ -25,6 +25,7 @@ func SetupRoutes(router *gin.Engine) {
 		unitRoutes.GET("/", controllers.GetUnits)
 		unitRoutes.POST("/", controllers.PostUnits)
 		unitRoutes.PUT("/:id", controllers.UpdateUnit)
+		unitRoutes.DELETE("/:id", controllers.DeleteUnit)
 	}
 
 	// route ingredients

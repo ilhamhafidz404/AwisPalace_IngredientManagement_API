@@ -130,3 +130,41 @@ func UpdateUnit(c *gin.Context) {
 		"data":    result,
 	})
 }
+
+// DeleteUnit godoc
+// @Summary Delete Unit
+// @Description Delete a unit by ID
+// @Tags Units
+// @Param id path string true "Unit ID"
+// @Router /units/{id} [delete]
+func DeleteUnit(c *gin.Context) {
+	id := c.Param("id")
+
+	var unit models.Unit
+
+	// Cek apakah unit dengan ID tersebut ada
+	if err := config.DB.First(&unit, "id = ?", id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "Unit not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	// Hapus data unit
+	if err := config.DB.Delete(&unit).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "Failed to delete unit",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "success",
+		"message": "Unit deleted successfully",
+	})
+}
+
