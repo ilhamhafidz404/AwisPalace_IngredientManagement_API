@@ -39,7 +39,7 @@ func GetIngredients(c *gin.Context) {
 // @Summary Post Ingredients
 // @Description Post Ingredients
 // @Tags Ingredients
-// @Param unit body dto.IngredientParamRequest true "Create ingredient"
+// @Param ingredient body dto.IngredientParamRequest true "Create ingredient"
 // @Router /ingredients [post]
 func PostIngredients(c *gin.Context) {
 	var input dto.IngredientParamRequest
@@ -73,12 +73,65 @@ func PostIngredients(c *gin.Context) {
 	}
 
 	// Mapping ke DTO response
-	var result dto.Unit
+	var result dto.Ingredient
 	copier.Copy(&result, &ingredient)
 
 	c.JSON(http.StatusCreated, gin.H{
 		"status":  "success",
 		"message": "Ingredient created successfully",
+		"data":    result,
+	})
+}
+
+// UpdateIngredient godoc
+// @Summary Update Ingredient
+// @Description Update an existing ingredient by ID
+// @Tags Ingredients
+// @Param id path int true "Ingredient ID"
+// @Param ingredient body dto.IngredientParamRequest true "Updated ingredient data"
+// @Router /ingredients/{id} [put]
+func UpdateIngredients(c *gin.Context) {
+	id := c.Param("id")
+
+	var input dto.IngredientParamRequest
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "Invalid input data",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	var ingredient models.Ingredient
+	if err := config.DB.First(&ingredient, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "Ingredient not found",
+		})
+		return
+	}
+
+	ingredient.Name 	= input.Name
+	ingredient.Slug 	= utils.GenerateSlug(input.Name)
+	ingredient.Stock 	= input.Stock
+	ingredient.UnitID 	= input.UnitID
+
+	if err := config.DB.Save(&ingredient).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "Failed to update ingredient",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	var result dto.Ingredient
+	copier.Copy(&result, &ingredient)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "success",
+		"message": "Ingredient updated successfully",
 		"data":    result,
 	})
 }

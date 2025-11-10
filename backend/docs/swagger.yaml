@@ -36,12 +36,31 @@ paths:
       parameters:
       - description: Create ingredient
         in: body
-        name: unit
+        name: ingredient
         required: true
         schema:
           $ref: '#/definitions/dto.IngredientParamRequest'
       responses: {}
       summary: Post Ingredients
+      tags:
+      - Ingredients
+  /ingredients/{id}:
+    put:
+      description: Update an existing ingredient by ID
+      parameters:
+      - description: Ingredient ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated ingredient data
+        in: body
+        name: ingredient
+        required: true
+        schema:
+          $ref: '#/definitions/dto.IngredientParamRequest'
+      responses: {}
+      summary: Update Ingredient
       tags:
       - Ingredients
   /units:

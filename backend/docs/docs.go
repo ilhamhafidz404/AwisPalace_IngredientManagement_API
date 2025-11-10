@@ -33,7 +33,35 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "Create ingredient",
-                        "name": "unit",
+                        "name": "ingredient",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.IngredientParamRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/ingredients/{id}": {
+            "put": {
+                "description": "Update an existing ingredient by ID",
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Update Ingredient",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ingredient ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated ingredient data",
+                        "name": "ingredient",
                         "in": "body",
                         "required": true,
                         "schema": {

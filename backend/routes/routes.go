@@ -33,5 +33,6 @@ func SetupRoutes(router *gin.Engine) {
 	{
 		ingredientRoutes.GET("/", controllers.GetIngredients)
 		ingredientRoutes.POST("/", controllers.PostIngredients)
+		ingredientRoutes.PUT("/:id", controllers.UpdateIngredients)
 	}
 }
