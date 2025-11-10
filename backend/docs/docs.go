@@ -23,6 +23,25 @@ const docTemplate = `{
                 ],
                 "summary": "Get Ingredients",
                 "responses": {}
+            },
+            "post": {
+                "description": "Post Ingredients",
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Post Ingredients",
+                "parameters": [
+                    {
+                        "description": "Create ingredient",
+                        "name": "unit",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.IngredientParamRequest"
+                        }
+                    }
+                ],
+                "responses": {}
             }
         },
         "/units": {
@@ -121,6 +140,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.IngredientParamRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "stock": {
+                    "type": "number"
+                },
+                "unit_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "dto.UnitParamRequest": {
             "type": "object",
             "properties": {

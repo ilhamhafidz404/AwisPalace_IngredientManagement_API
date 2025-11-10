@@ -15,3 +15,10 @@ type Ingredient struct {
 	UpdatedAt 	time.Time 	`json:"updated_at"`
 	DeletedAt 	time.Time 	`json:"deleted_at"`
 }
+
+
+type IngredientParamRequest struct {
+	Name  		string  	`json:"name"`
+	Stock  		float64 	`json:"stock"`
+	UnitID 		uint    	`json:"unit_id"`
+}

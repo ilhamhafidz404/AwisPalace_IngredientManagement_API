@@ -32,5 +32,6 @@ func SetupRoutes(router *gin.Engine) {
 	ingredientRoutes := router.Group("/ingredients")
 	{
 		ingredientRoutes.GET("/", controllers.GetIngredients)
+		ingredientRoutes.POST("/", controllers.PostIngredients)
 	}
 }

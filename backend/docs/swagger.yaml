@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  dto.IngredientParamRequest:
+    properties:
+      name:
+        type: string
+      stock:
+        type: number
+      unit_id:
+        type: integer
+    type: object
   dto.UnitParamRequest:
     properties:
       name:
@@ -20,6 +29,19 @@ paths:
       description: Get Ingredients
       responses: {}
       summary: Get Ingredients
+      tags:
+      - Ingredients
+    post:
+      description: Post Ingredients
+      parameters:
+      - description: Create ingredient
+        in: body
+        name: unit
+        required: true
+        schema:
+          $ref: '#/definitions/dto.IngredientParamRequest'
+      responses: {}
+      summary: Post Ingredients
       tags:
       - Ingredients
   /units:
