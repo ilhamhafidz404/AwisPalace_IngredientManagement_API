@@ -10,3 +10,9 @@ type Unit struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	DeletedAt time.Time `json:"deleted_at"`
 }
+
+
+type UnitCreateRequest struct {
+	Name      string `json:"name"`
+	Symbol    string `json:"symbol"`
+}

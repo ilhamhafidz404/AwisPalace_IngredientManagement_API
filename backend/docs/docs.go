@@ -33,6 +33,25 @@ const docTemplate = `{
                 ],
                 "summary": "Get Units",
                 "responses": {}
+            },
+            "post": {
+                "description": "Post Units",
+                "tags": [
+                    "Units"
+                ],
+                "summary": "Post Units",
+                "parameters": [
+                    {
+                        "description": "Unit data",
+                        "name": "unit",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UnitCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {}
             }
         },
         "/users": {
@@ -52,6 +71,19 @@ const docTemplate = `{
                             }
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.UnitCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "symbol": {
+                    "type": "string"
                 }
             }
         }

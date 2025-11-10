@@ -1,4 +1,12 @@
 basePath: /
+definitions:
+  dto.UnitCreateRequest:
+    properties:
+      name:
+        type: string
+      symbol:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -19,6 +27,19 @@ paths:
       description: Get Units
       responses: {}
       summary: Get Units
+      tags:
+      - Units
+    post:
+      description: Post Units
+      parameters:
+      - description: Unit data
+        in: body
+        name: unit
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UnitCreateRequest'
+      responses: {}
+      summary: Post Units
       tags:
       - Units
   /users:
