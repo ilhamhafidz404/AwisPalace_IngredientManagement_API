@@ -5,8 +5,8 @@ WORKDIR /app
 
 # Salin dependency file
 COPY go.mod go.sum ./
-RUN go env -w GOPROXY=https://proxy.golang.org,direct && go mod download
-COPY .env ./
+RUN go env -w GOPROXY=direct && go mod download
+# COPY .env ./
 
 # Salin semua source code
 COPY . .
