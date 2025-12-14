@@ -55,8 +55,8 @@ func PostUnits(c *gin.Context) {
 
 	// Mapping DTO ke model database
 	unit := models.Unit{
-		Name:        input.Name,
-		Symbol: 	 input.Symbol,
+		Name:   input.Name,
+		Symbol: input.Symbol,
 	}
 
 	// Simpan ke database
@@ -167,4 +167,3 @@ func DeleteUnit(c *gin.Context) {
 		"message": "Unit deleted successfully",
 	})
 }
-

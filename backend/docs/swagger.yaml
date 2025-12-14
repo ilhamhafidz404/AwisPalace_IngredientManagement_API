@@ -9,6 +9,59 @@ definitions:
       unit_id:
         type: integer
     type: object
+  dto.MenuCreateRequest:
+    properties:
+      description:
+        type: string
+      image:
+        type: string
+      ingredients:
+        items:
+          $ref: '#/definitions/dto.MenuIngredientRequest'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+    required:
+    - image
+    - ingredients
+    - name
+    - price
+    type: object
+  dto.MenuIngredientRequest:
+    properties:
+      ingredient_id:
+        type: integer
+      quantity:
+        type: number
+      unit_id:
+        type: integer
+    required:
+    - ingredient_id
+    - quantity
+    - unit_id
+    type: object
+  dto.MenuUpdateRequest:
+    properties:
+      description:
+        type: string
+      image:
+        type: string
+      ingredients:
+        items:
+          $ref: '#/definitions/dto.MenuIngredientRequest'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+    required:
+    - image
+    - ingredients
+    - name
+    - price
+    type: object
   dto.UnitParamRequest:
     properties:
       name:
@@ -75,6 +128,59 @@ paths:
       summary: Update Ingredient
       tags:
       - Ingredients
+  /menus:
+    get:
+      description: Get Menus
+      responses: {}
+      summary: Get Menus
+      tags:
+      - Menus
+      - Menus
+    post:
+      description: Create Menu
+      parameters:
+      - description: Create menu
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/dto.MenuCreateRequest'
+      responses: {}
+      summary: Create Menu
+      tags:
+      - Menus
+      - Menus
+  /menus/{id}:
+    delete:
+      description: Delete Menu by ID
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Delete Menu
+      tags:
+      - Menus
+    put:
+      description: Update Menu by ID
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update menu
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/dto.MenuUpdateRequest'
+      responses: {}
+      summary: Update Menu
+      tags:
+      - Menus
   /units:
     get:
       description: Get Units

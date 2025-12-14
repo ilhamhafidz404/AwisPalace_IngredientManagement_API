@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/gorm"
 )
+
 func DatabaseSeeder(db *gorm.DB) {
 	fmt.Println("🚀 Menjalankan Database Seeder...")
 
@@ -12,6 +13,7 @@ func DatabaseSeeder(db *gorm.DB) {
 	seeders := []func(*gorm.DB) error{
 		SeedUnits,
 		IngredientSeeder,
+		MenuSeeder,
 	}
 
 	for _, seed := range seeders {

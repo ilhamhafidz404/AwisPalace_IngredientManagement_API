@@ -11,6 +11,8 @@ func Migrate() {
 		&models.User{},
 		&models.Unit{},
 		&models.Ingredient{},
+		&models.Menu{},
+		models.MenuIngredient{},
 	)
 
 	if err != nil {

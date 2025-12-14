@@ -56,10 +56,10 @@ func PostIngredients(c *gin.Context) {
 
 	// Mapping DTO ke model database
 	ingredient := models.Ingredient{
-		Name:        input.Name,
-		Slug: 		 utils.GenerateSlug(input.Name),
-		Stock: 		 input.Stock,
-		UnitID: 	 input.UnitID,
+		Name:   input.Name,
+		Slug:   utils.GenerateSlug(input.Name),
+		Stock:  input.Stock,
+		UnitID: input.UnitID,
 	}
 
 	// Simpan ke database
@@ -112,10 +112,10 @@ func UpdateIngredients(c *gin.Context) {
 		return
 	}
 
-	ingredient.Name 	= input.Name
-	ingredient.Slug 	= utils.GenerateSlug(input.Name)
-	ingredient.Stock 	= input.Stock
-	ingredient.UnitID 	= input.UnitID
+	ingredient.Name = input.Name
+	ingredient.Slug = utils.GenerateSlug(input.Name)
+	ingredient.Stock = input.Stock
+	ingredient.UnitID = input.UnitID
 
 	if err := config.DB.Save(&ingredient).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

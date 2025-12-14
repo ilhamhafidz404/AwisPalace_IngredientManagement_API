@@ -83,6 +83,82 @@
                 "responses": {}
             }
         },
+        "/menus": {
+            "get": {
+                "description": "Get Menus",
+                "tags": [
+                    "Menus",
+                    "Menus"
+                ],
+                "summary": "Get Menus",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create Menu",
+                "tags": [
+                    "Menus",
+                    "Menus"
+                ],
+                "summary": "Create Menu",
+                "parameters": [
+                    {
+                        "description": "Create menu",
+                        "name": "menu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.MenuCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/menus/{id}": {
+            "put": {
+                "description": "Update Menu by ID",
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Update Menu",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Menu ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update menu",
+                        "name": "menu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.MenuUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete Menu by ID",
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Delete Menu",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Menu ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/units": {
             "get": {
                 "description": "Get Units",
@@ -190,6 +266,83 @@
                 },
                 "unit_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "dto.MenuCreateRequest": {
+            "type": "object",
+            "required": [
+                "image",
+                "ingredients",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.MenuIngredientRequest"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "dto.MenuIngredientRequest": {
+            "type": "object",
+            "required": [
+                "ingredient_id",
+                "quantity",
+                "unit_id"
+            ],
+            "properties": {
+                "ingredient_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "unit_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.MenuUpdateRequest": {
+            "type": "object",
+            "required": [
+                "image",
+                "ingredients",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "ingredients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.MenuIngredientRequest"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
                 }
             }
         },

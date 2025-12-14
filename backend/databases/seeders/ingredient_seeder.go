@@ -11,22 +11,22 @@ import (
 func IngredientSeeder(db *gorm.DB) error {
 	ingredients := []models.Ingredient{
 		{
-			Name:         "Garam",
-			Slug:         "garam",
-			UnitID:       1,
-			Stock:		  100,
+			Name:   "Garam",
+			Slug:   "garam",
+			UnitID: 1,
+			Stock:  100,
 		},
 		{
-			Name:         "Gula",
-			Slug:         "gula",
-			UnitID:       2,
-			Stock:		  80,
+			Name:   "Gula",
+			Slug:   "gula",
+			UnitID: 2,
+			Stock:  80,
 		},
 		{
-			Name:         "Tepung Terigu",
-			Slug:         "tepung-terigu",
-			UnitID:       3,
-			Stock:		  50,
+			Name:   "Tepung Terigu",
+			Slug:   "tepung-terigu",
+			UnitID: 3,
+			Stock:  50,
 		},
 	}
 
@@ -42,6 +42,6 @@ func IngredientSeeder(db *gorm.DB) error {
 			fmt.Printf("⚠️ Ingredient %s sudah ada, skip.\n", ingredient.Name)
 		}
 	}
-	
+
 	return nil
 }
