@@ -159,6 +159,71 @@
                 "responses": {}
             }
         },
+        "/transactions": {
+            "get": {
+                "description": "Get Transactions",
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get Transactions",
+                "responses": {}
+            },
+            "post": {
+                "description": "Create Transaction",
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create Transaction",
+                "parameters": [
+                    {
+                        "description": "Create transaction",
+                        "name": "transaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.TransactionCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "description": "Get Transaction by ID",
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get Transaction",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete Transaction by ID (and restore stock)",
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Delete Transaction",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Transaction ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/units": {
             "get": {
                 "description": "Get Units",
@@ -343,6 +408,39 @@
                 },
                 "price": {
                     "type": "number"
+                }
+            }
+        },
+        "dto.TransactionCreateRequest": {
+            "type": "object",
+            "required": [
+                "items"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.TransactionItemRequest"
+                    }
+                },
+                "notes": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.TransactionItemRequest": {
+            "type": "object",
+            "required": [
+                "menu_id",
+                "quantity"
+            ],
+            "properties": {
+                "menu_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 1
                 }
             }
         },

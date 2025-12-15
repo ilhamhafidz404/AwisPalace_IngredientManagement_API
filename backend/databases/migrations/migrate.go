@@ -13,6 +13,10 @@ func Migrate() {
 		&models.Ingredient{},
 		&models.Menu{},
 		models.MenuIngredient{},
+		//
+		models.Transaction{},
+		models.TransactionItem{},
+		models.StockReduction{},
 	)
 
 	if err != nil {

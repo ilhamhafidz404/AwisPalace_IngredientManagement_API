@@ -11,4 +11,5 @@ type Ingredient struct {
 	Unit   Unit
 
 	MenuIngredients []MenuIngredient
+	StockReductions []StockReduction
 }

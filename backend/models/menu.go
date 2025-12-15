@@ -10,5 +10,6 @@ type Menu struct {
 	Image       string  `gorm:"type:text"`
 	Price       float64 `gorm:"type:numeric(12,2)"`
 
-	MenuIngredients []MenuIngredient
+	MenuIngredients  []MenuIngredient
+	TransactionItems []TransactionItem
 }
