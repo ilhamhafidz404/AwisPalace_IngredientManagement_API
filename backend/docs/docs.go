@@ -91,38 +91,92 @@ const docTemplate = `{
         },
         "/menus": {
             "get": {
-                "description": "Get Menus",
+                "description": "Get all menus with ingredients",
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
-                    "Menus",
                     "Menus"
                 ],
                 "summary": "Get Menus",
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             },
             "post": {
-                "description": "Create Menu",
+                "description": "Create menu with image upload",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
-                    "Menus",
                     "Menus"
                 ],
                 "summary": "Create Menu",
                 "parameters": [
                     {
-                        "description": "Create menu",
-                        "name": "menu",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.MenuCreateRequest"
-                        }
+                        "type": "string",
+                        "description": "Menu Name",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Menu Price",
+                        "name": "price",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Menu Description",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Ingredients JSON array",
+                        "name": "ingredients",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Menu Image",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/menus/{id}": {
             "put": {
-                "description": "Update Menu by ID",
+                "description": "Update menu by ID with optional image upload",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "Menus"
                 ],
@@ -136,19 +190,54 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "Update menu",
-                        "name": "menu",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.MenuUpdateRequest"
-                        }
+                        "type": "string",
+                        "description": "Menu Name",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Menu Price",
+                        "name": "price",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Menu Description",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Ingredients JSON array",
+                        "name": "ingredients",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Menu Image (optional)",
+                        "name": "image",
+                        "in": "formData"
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             },
             "delete": {
-                "description": "Delete Menu by ID",
+                "description": "Delete menu by ID",
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "Menus"
                 ],
@@ -162,7 +251,15 @@ const docTemplate = `{
                         "required": true
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         },
         "/transactions": {
@@ -337,83 +434,6 @@ const docTemplate = `{
                 },
                 "unit_id": {
                     "type": "integer"
-                }
-            }
-        },
-        "dto.MenuCreateRequest": {
-            "type": "object",
-            "required": [
-                "image",
-                "ingredients",
-                "name",
-                "price"
-            ],
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "image": {
-                    "type": "string"
-                },
-                "ingredients": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.MenuIngredientRequest"
-                    }
-                },
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "number"
-                }
-            }
-        },
-        "dto.MenuIngredientRequest": {
-            "type": "object",
-            "required": [
-                "ingredient_id",
-                "quantity",
-                "unit_id"
-            ],
-            "properties": {
-                "ingredient_id": {
-                    "type": "integer"
-                },
-                "quantity": {
-                    "type": "number"
-                },
-                "unit_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "dto.MenuUpdateRequest": {
-            "type": "object",
-            "required": [
-                "image",
-                "ingredients",
-                "name",
-                "price"
-            ],
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "image": {
-                    "type": "string"
-                },
-                "ingredients": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/dto.MenuIngredientRequest"
-                    }
-                },
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "number"
                 }
             }
         },

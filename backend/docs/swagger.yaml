@@ -9,59 +9,6 @@ definitions:
       unit_id:
         type: integer
     type: object
-  dto.MenuCreateRequest:
-    properties:
-      description:
-        type: string
-      image:
-        type: string
-      ingredients:
-        items:
-          $ref: '#/definitions/dto.MenuIngredientRequest'
-        type: array
-      name:
-        type: string
-      price:
-        type: number
-    required:
-    - image
-    - ingredients
-    - name
-    - price
-    type: object
-  dto.MenuIngredientRequest:
-    properties:
-      ingredient_id:
-        type: integer
-      quantity:
-        type: number
-      unit_id:
-        type: integer
-    required:
-    - ingredient_id
-    - quantity
-    - unit_id
-    type: object
-  dto.MenuUpdateRequest:
-    properties:
-      description:
-        type: string
-      image:
-        type: string
-      ingredients:
-        items:
-          $ref: '#/definitions/dto.MenuIngredientRequest'
-        type: array
-      name:
-        type: string
-      price:
-        type: number
-    required:
-    - image
-    - ingredients
-    - name
-    - price
-    type: object
   dto.TransactionCreateRequest:
     properties:
       items:
@@ -152,54 +99,119 @@ paths:
       - Ingredients
   /menus:
     get:
-      description: Get Menus
-      responses: {}
+      description: Get all menus with ingredients
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
       summary: Get Menus
       tags:
       - Menus
-      - Menus
     post:
-      description: Create Menu
+      consumes:
+      - multipart/form-data
+      description: Create menu with image upload
       parameters:
-      - description: Create menu
-        in: body
-        name: menu
+      - description: Menu Name
+        in: formData
+        name: name
         required: true
-        schema:
-          $ref: '#/definitions/dto.MenuCreateRequest'
-      responses: {}
+        type: string
+      - description: Menu Price
+        in: formData
+        name: price
+        required: true
+        type: number
+      - description: Menu Description
+        in: formData
+        name: description
+        type: string
+      - description: Ingredients JSON array
+        in: formData
+        name: ingredients
+        required: true
+        type: string
+      - description: Menu Image
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
       summary: Create Menu
       tags:
       - Menus
-      - Menus
   /menus/{id}:
     delete:
-      description: Delete Menu by ID
+      description: Delete menu by ID
       parameters:
       - description: Menu ID
         in: path
         name: id
         required: true
         type: integer
-      responses: {}
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
       summary: Delete Menu
       tags:
       - Menus
     put:
-      description: Update Menu by ID
+      consumes:
+      - multipart/form-data
+      description: Update menu by ID with optional image upload
       parameters:
       - description: Menu ID
         in: path
         name: id
         required: true
         type: integer
-      - description: Update menu
-        in: body
-        name: menu
+      - description: Menu Name
+        in: formData
+        name: name
         required: true
-        schema:
-          $ref: '#/definitions/dto.MenuUpdateRequest'
-      responses: {}
+        type: string
+      - description: Menu Price
+        in: formData
+        name: price
+        required: true
+        type: number
+      - description: Menu Description
+        in: formData
+        name: description
+        type: string
+      - description: Ingredients JSON array
+        in: formData
+        name: ingredients
+        required: true
+        type: string
+      - description: Menu Image (optional)
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
       summary: Update Menu
       tags:
       - Menus
