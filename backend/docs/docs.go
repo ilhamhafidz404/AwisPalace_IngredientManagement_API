@@ -15,6 +15,38 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/export/transactions": {
+            "get": {
+                "description": "Export transaction data with ingredient usage to Excel file. Returns Excel file with 3 sheets: Transactions (all transaction details), Ingredient Usage (ingredients used per transaction with stock changes), and Summary (statistics and top selling items). Supports date range filtering, defaults to last 30 days if dates not specified.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ],
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Export Transactions to Excel",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "2024-01-01",
+                        "description": "Start date in YYYY-MM-DD format. Defaults to 30 days ago if not specified.",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "2024-12-31",
+                        "description": "End date in YYYY-MM-DD format. Defaults to today if not specified.",
+                        "name": "end_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/ingredients": {
             "get": {
                 "description": "Get Ingredients",

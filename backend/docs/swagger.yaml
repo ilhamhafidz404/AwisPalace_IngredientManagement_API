@@ -46,6 +46,33 @@ info:
   title: Awis Palace Ingredient Management API
   version: "1.0"
 paths:
+  /export/transactions:
+    get:
+      consumes:
+      - application/json
+      description: 'Export transaction data with ingredient usage to Excel file. Returns
+        Excel file with 3 sheets: Transactions (all transaction details), Ingredient
+        Usage (ingredients used per transaction with stock changes), and Summary (statistics
+        and top selling items). Supports date range filtering, defaults to last 30
+        days if dates not specified.'
+      parameters:
+      - description: Start date in YYYY-MM-DD format. Defaults to 30 days ago if not
+          specified.
+        example: "2024-01-01"
+        in: query
+        name: start_date
+        type: string
+      - description: End date in YYYY-MM-DD format. Defaults to today if not specified.
+        example: "2024-12-31"
+        in: query
+        name: end_date
+        type: string
+      produces:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      responses: {}
+      summary: Export Transactions to Excel
+      tags:
+      - Transactions
   /ingredients:
     get:
       description: Get Ingredients

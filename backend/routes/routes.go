@@ -55,4 +55,10 @@ func SetupRoutes(router *gin.Engine) {
 		transactionRoutes.DELETE("/:id", controllers.DeleteTransaction)
 	}
 
+	// route exports
+	exportRoutes := router.Group("/export")
+	{
+		exportRoutes.GET("/transactions", controllers.ExportTransactions)
+	}
+
 }
