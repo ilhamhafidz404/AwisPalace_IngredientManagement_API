@@ -1,5 +1,35 @@
 basePath: /
 definitions:
+  dto.AuthData:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/dto.UserData'
+    type: object
+  dto.AuthResponse:
+    properties:
+      data:
+        $ref: '#/definitions/dto.AuthData'
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  dto.GoogleAuthRequest:
+    properties:
+      email:
+        type: string
+      id_token:
+        type: string
+      name:
+        type: string
+      photo_url:
+        type: string
+    required:
+    - email
+    - id_token
+    type: object
   dto.IngredientParamRequest:
     properties:
       name:
@@ -38,6 +68,17 @@ definitions:
       symbol:
         type: string
     type: object
+  dto.UserData:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      photo_url:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -46,6 +87,93 @@ info:
   title: Awis Palace Ingredient Management API
   version: "1.0"
 paths:
+  /auth/google:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user with Google ID token
+      parameters:
+      - description: Google authentication data
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GoogleAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/dto.AuthResponse'
+        "201":
+          description: User created and logged in
+          schema:
+            $ref: '#/definitions/dto.AuthResponse'
+        "400":
+          description: Invalid request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Invalid ID token
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal server error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Authenticate with Google
+      tags:
+      - Authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Generate a new JWT token from existing valid token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: New token generated
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Invalid or missing token
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Refresh JWT token
+      tags:
+      - Authentication
+  /auth/verify:
+    get:
+      consumes:
+      - application/json
+      description: Verify if the provided JWT token is valid
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token is valid
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Invalid or missing token
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Verify JWT token
+      tags:
+      - Authentication
   /export/transactions:
     get:
       consumes:

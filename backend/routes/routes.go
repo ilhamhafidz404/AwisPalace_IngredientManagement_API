@@ -13,6 +13,13 @@ func SetupRoutes(router *gin.Engine) {
 		c.JSON(http.StatusOK, gin.H{"message": "Server running successfully!"})
 	})
 
+	auth := router.Group("/auth")
+	{
+		auth.POST("/google", controllers.GoogleAuth)
+		auth.GET("/verify", controllers.VerifyToken)
+		auth.POST("/refresh", controllers.RefreshToken)
+	}
+
 	// route users
 	userRoutes := router.Group("/users")
 	{
