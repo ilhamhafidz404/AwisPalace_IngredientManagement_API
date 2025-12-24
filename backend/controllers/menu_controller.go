@@ -80,6 +80,63 @@ func GetMenus(c *gin.Context) {
 	})
 }
 
+// ==================== SHOW MENU ====================
+
+// GetMenu godoc
+// @Summary Get Menu
+// @Description Get Menu by ID
+// @Tags Menus
+// @Param id path int true "Menu ID"
+// @Router /menus/{id} [get]
+func ShowMenu(c *gin.Context) {
+	id := c.Param("id")
+	var menu models.Menu
+
+	if err := config.DB.
+		Preload("MenuIngredients").
+		Preload("MenuIngredients.Ingredient").
+		Preload("MenuIngredients.Unit").
+		First(&menu, id).Error; err != nil {
+
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  "error",
+			"message": "Menu not found",
+		})
+		return
+	}
+
+	menuDTO := dto.Menu{
+		ID:          menu.ID,
+		Name:        menu.Name,
+		Slug:        menu.Slug,
+		Image:       menu.Image,
+		Description: menu.Description,
+		CreatedAt:   menu.CreatedAt,
+		UpdatedAt:   menu.UpdatedAt,
+	}
+
+	for _, mi := range menu.MenuIngredients {
+		menuDTO.Ingredients = append(menuDTO.Ingredients, dto.MenuIngredient{
+			ID: mi.ID,
+			Ingredient: dto.MenuIngredientIngredient{
+				ID:   mi.Ingredient.ID,
+				Name: mi.Ingredient.Name,
+				Slug: mi.Ingredient.Slug,
+			},
+			Quantity: mi.Quantity,
+			Unit: dto.MenuIngredientUnit{
+				ID:   mi.Unit.ID,
+				Name: mi.Unit.Name,
+			},
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"data":   menuDTO,
+	})
+}
+
 // ==================== CREATE MENU ====================
 
 // PostMenu godoc

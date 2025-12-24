@@ -326,6 +326,18 @@ paths:
       summary: Delete Menu
       tags:
       - Menus
+    get:
+      description: Get Menu by ID
+      parameters:
+      - description: Menu ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: Get Menu
+      tags:
+      - Menus
     put:
       consumes:
       - multipart/form-data

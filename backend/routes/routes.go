@@ -48,6 +48,7 @@ func SetupRoutes(router *gin.Engine) {
 	menuRoutes := router.Group("/menus")
 	{
 		menuRoutes.GET("", controllers.GetMenus)
+		menuRoutes.GET("/:id", controllers.ShowMenu)
 		menuRoutes.POST("", controllers.PostMenu)
 		menuRoutes.PUT("/:id", controllers.UpdateMenu)
 		menuRoutes.DELETE("/:id", controllers.DeleteMenu)

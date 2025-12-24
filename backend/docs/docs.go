@@ -334,6 +334,23 @@ const docTemplate = `{
             }
         },
         "/menus/{id}": {
+            "get": {
+                "description": "Get Menu by ID",
+                "tags": [
+                    "Menus"
+                ],
+                "summary": "Get Menu",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Menu ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
             "put": {
                 "description": "Update menu by ID with optional image upload",
                 "consumes": [
