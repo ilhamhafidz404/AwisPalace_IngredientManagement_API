@@ -372,7 +372,16 @@ paths:
       - Menus
   /transactions:
     get:
-      description: Get Transactions
+      description: 'Get Transactions with optional date filter (default: this week)'
+      parameters:
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: start_date
+        type: string
+      - description: End date (YYYY-MM-DD)
+        in: query
+        name: end_date
+        type: string
       responses: {}
       summary: Get Transactions
       tags:

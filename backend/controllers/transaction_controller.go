@@ -14,13 +14,61 @@ import (
 
 // GetTransactions godoc
 // @Summary Get Transactions
-// @Description Get Transactions
+// @Description Get Transactions with optional date filter (default: this week)
 // @Tags Transactions
+// @Param start_date query string false "Start date (YYYY-MM-DD)"
+// @Param end_date query string false "End date (YYYY-MM-DD)"
 // @Router /transactions [get]
 func GetTransactions(c *gin.Context) {
 	var transactions []models.Transaction
 
+	startDateStr := c.Query("start_date")
+	endDateStr := c.Query("end_date")
+
+	var startDate, endDate time.Time
+	var err error
+
+	if startDateStr == "" || endDateStr == "" {
+		now := time.Now()
+		weekday := int(now.Weekday())
+		if weekday == 0 {
+			weekday = 7
+		}
+
+		startDate = time.Date(
+			now.Year(),
+			now.Month(),
+			now.Day()-weekday+1,
+			0, 0, 0, 0,
+			now.Location(),
+		)
+
+		endDate = startDate.AddDate(0, 0, 7).Add(-time.Nanosecond)
+	} else {
+		startDate, err = time.Parse("2006-01-02", startDateStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  "error",
+				"message": "Invalid start_date format (YYYY-MM-DD)",
+			})
+			return
+		}
+
+		endDate, err = time.Parse("2006-01-02", endDateStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  "error",
+				"message": "Invalid end_date format (YYYY-MM-DD)",
+			})
+			return
+		}
+
+		endDate = endDate.Add(23*time.Hour + 59*time.Minute + 59*time.Second)
+	}
+
+	//
 	if err := config.DB.
+		Where("transaction_date BETWEEN ? AND ?", startDate, endDate).
 		Preload("TransactionItems").
 		Preload("TransactionItems.Menu").
 		Preload("TransactionItems.StockReductions").
@@ -36,6 +84,7 @@ func GetTransactions(c *gin.Context) {
 		return
 	}
 
+	//
 	var response []dto.Transaction
 
 	for _, transaction := range transactions {
@@ -85,6 +134,10 @@ func GetTransactions(c *gin.Context) {
 		}
 
 		response = append(response, transactionDTO)
+	}
+
+	if response == nil {
+		response = make([]dto.Transaction, 0)
 	}
 
 	c.JSON(http.StatusOK, gin.H{

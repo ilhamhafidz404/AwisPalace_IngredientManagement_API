@@ -429,11 +429,25 @@ const docTemplate = `{
         },
         "/transactions": {
             "get": {
-                "description": "Get Transactions",
+                "description": "Get Transactions with optional date filter (default: this week)",
                 "tags": [
                     "Transactions"
                 ],
                 "summary": "Get Transactions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Start date (YYYY-MM-DD)",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date (YYYY-MM-DD)",
+                        "name": "end_date",
+                        "in": "query"
+                    }
+                ],
                 "responses": {}
             },
             "post": {
