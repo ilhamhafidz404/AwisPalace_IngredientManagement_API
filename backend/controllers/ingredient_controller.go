@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"AwisPalace_IngredientManagement/config"
 	"AwisPalace_IngredientManagement/dto"
@@ -21,16 +23,39 @@ func GetIngredients(c *gin.Context) {
 	var ingredients []models.Ingredient
 
 	if err := config.DB.Preload("Unit").Find(&ingredients).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": "error",
+			"error":  err.Error(),
+		})
 		return
 	}
 
 	var result []dto.Ingredient
 	copier.Copy(&result, &ingredients)
 
+	// ==========================
+	// CEK STOK HAMPIR HABIS (<= 5)
+	// ==========================
+	var lowStockIngredients []string
+
+	for _, ingredient := range ingredients {
+		if ingredient.Stock <= 5 {
+			lowStockIngredients = append(lowStockIngredients, ingredient.Name)
+		}
+	}
+
+	message := "Get Data Ingredient Success"
+
+	if len(lowStockIngredients) > 0 {
+		message = fmt.Sprintf(
+			"%s sudah mulai habis",
+			strings.Join(lowStockIngredients, ", "),
+		)
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
-		"message": "Get Data Ingredient Succcess",
+		"message": message,
 		"data":    result,
 	})
 }
